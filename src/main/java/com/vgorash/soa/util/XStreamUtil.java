@@ -31,6 +31,11 @@ public class XStreamUtil {
     }
 
     public static String toXML(TicketListWrap wrap){
+        for(Ticket ticket : wrap.getTickets()){
+            if(ticket.getCreationDate() != null){
+                ticket.setCreationDate(Timestamp.from(ticket.getCreationDate().toInstant()));
+            }
+        }
         return xStream.toXML(wrap);
     }
 
