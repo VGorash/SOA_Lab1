@@ -1,18 +1,15 @@
-package com.vgorash.soa.util;
+package com.vgorash.web.util;
 
-import com.vgorash.soa.model.Coordinates;
-import com.vgorash.soa.model.Event;
-import com.vgorash.soa.model.Ticket;
-import com.vgorash.soa.model.TicketType;
+import com.vgorash.web.model.Coordinates;
+import com.vgorash.web.model.Event;
+import com.vgorash.web.model.Ticket;
+import com.vgorash.web.model.TicketType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;

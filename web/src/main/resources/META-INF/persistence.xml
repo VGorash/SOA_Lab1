@@ -3,13 +3,13 @@
 
     <persistence-unit name="hibernate">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.vgorash.soa.model.Ticket</class>
-        <class>com.vgorash.soa.model.Event</class>
+        <class>com.vgorash.web.model.Ticket</class>
+        <class>com.vgorash.web.model.Event</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/studs"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.user" value="*"/>
-            <property name="javax.persistence.jdbc.password" value="*"/>
+            <property name="javax.persistence.jdbc.user" value="s264470"/>
+            <property name="javax.persistence.jdbc.password" value="npo508"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

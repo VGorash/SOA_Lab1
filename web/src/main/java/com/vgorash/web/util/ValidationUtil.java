@@ -1,10 +1,10 @@
-package com.vgorash.soa.util;
+package com.vgorash.web.util;
 
-import com.vgorash.soa.model.Coordinates;
-import com.vgorash.soa.model.Event;
-import com.vgorash.soa.model.Ticket;
+import com.vgorash.web.model.*;
 
-import javax.validation.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.util.Objects;
 import java.util.Set;
 

@@ -1,10 +1,8 @@
-package com.vgorash.soa.util;
+package com.vgorash.web.util;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.ConversionException;
-import com.vgorash.soa.model.Coordinates;
-import com.vgorash.soa.model.Event;
-import com.vgorash.soa.model.Ticket;
+import com.vgorash.web.model.*;
 
 import java.sql.Timestamp;
 import java.util.Date;

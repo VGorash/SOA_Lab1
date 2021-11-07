@@ -1,14 +1,17 @@
-package com.vgorash.soa.service;
-
-import com.vgorash.soa.model.*;
-import com.vgorash.soa.util.*;
+package com.vgorash.web.service;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
-public class TicketService {
+import com.vgorash.web.beans.TicketService;
+import com.vgorash.web.model.*;
+import com.vgorash.web.util.*;
+
+import javax.ejb.Stateless;
+
+@Stateless
+public class TicketServiceBean implements TicketService {
 
     private Ticket getTicketFromDB(RequestStructure requestStructure){
         if(Objects.isNull(requestStructure.getId())){
@@ -39,6 +42,7 @@ public class TicketService {
         return ticket;
     }
 
+    @Override
     public void getTicketList(RequestStructure requestStructure){
         TicketListWrap tickets = JPAUtil.getTickets(requestStructure);
         if(Objects.isNull(tickets)){
@@ -48,6 +52,7 @@ public class TicketService {
         requestStructure.setResponseCode(200);
     }
 
+    @Override
     public void getTicket(RequestStructure requestStructure){
         Ticket ticket = getTicketFromDB(requestStructure);
         if(Objects.isNull(ticket)){
@@ -57,6 +62,7 @@ public class TicketService {
         requestStructure.setResponseCode(200);
     }
 
+    @Override
     public void addTicket(RequestStructure requestStructure){
         Ticket ticket = getTicketFromRequest(requestStructure);
         if(Objects.isNull(ticket)){
@@ -78,6 +84,7 @@ public class TicketService {
         requestStructure.setResponseCode(200);
     }
 
+    @Override
     public void deleteTicket(RequestStructure requestStructure){
         Ticket ticket = getTicketFromDB(requestStructure);
         if(Objects.isNull(ticket)){
@@ -88,6 +95,7 @@ public class TicketService {
         requestStructure.setResponseCode(200);
     }
 
+    @Override
     public void modifyTicket(RequestStructure requestStructure){
         Ticket oldTicket = getTicketFromDB(requestStructure);
         if(Objects.isNull(oldTicket)){

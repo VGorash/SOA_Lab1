@@ -1,4 +1,4 @@
-package com.vgorash.soa.util;
+package com.vgorash.web.util;
 
 import lombok.Data;
 

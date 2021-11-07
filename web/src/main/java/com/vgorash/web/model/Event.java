@@ -1,7 +1,6 @@
-package com.vgorash.soa.model;
+package com.vgorash.web.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter

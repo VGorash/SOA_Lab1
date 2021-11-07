@@ -1,8 +1,8 @@
-package com.vgorash.soa.util;
+package com.vgorash.web.util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.vgorash.soa.model.Ticket;
+import com.vgorash.web.model.Ticket;
 import lombok.Data;
 
 import java.util.List;

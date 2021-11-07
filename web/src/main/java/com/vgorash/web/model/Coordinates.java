@@ -1,7 +1,8 @@
-package com.vgorash.soa.model;
+package com.vgorash.web.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;

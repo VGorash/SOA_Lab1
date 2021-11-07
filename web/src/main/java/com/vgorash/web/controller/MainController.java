@@ -1,8 +1,9 @@
-package com.vgorash.soa.controller;
+package com.vgorash.web.controller;
 
-import com.vgorash.soa.service.TicketService;
-import com.vgorash.soa.util.*;
+import com.vgorash.web.beans.TicketService;
+import com.vgorash.web.util.*;
 
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.HashMap;
@@ -12,11 +13,8 @@ import java.util.Objects;
 @Path("/tickets")
 public class MainController {
 
-    private final TicketService ticketService;
-
-    public MainController(){
-        this.ticketService = new TicketService();
-    }
+    @EJB
+    private TicketService ticketService;
 
     private Response processResponse(RequestStructure requestStructure){
         return Response.status(requestStructure.getResponseCode())

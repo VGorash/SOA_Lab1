@@ -1,4 +1,4 @@
-package com.vgorash.soa.model;
+package com.vgorash.web.model;
 
 public enum EventType {
     CONCERT,

@@ -1,4 +1,4 @@
-package com.vgorash.soa.controller;
+package com.vgorash.web.controller;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
