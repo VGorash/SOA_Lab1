@@ -1,9 +1,9 @@
-package com.vgorash.web.util;
+package com.vgorash.beans.util;
 
-import com.vgorash.web.model.Coordinates;
-import com.vgorash.web.model.Event;
-import com.vgorash.web.model.Ticket;
-import com.vgorash.web.model.TicketType;
+import com.vgorash.beans.model.Coordinates;
+import com.vgorash.beans.model.Event;
+import com.vgorash.beans.model.Ticket;
+import com.vgorash.beans.model.TicketType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -127,11 +127,11 @@ public class JPAUtil {
         return (Double) countQuery.getSingleResult();
     }
 
-    public static List<Ticket> getCommentsLike(String str){
-        return entityManager.createQuery("select t from Ticket t where t.comment like :str", Ticket.class).setParameter("str", "%"+str+"%").getResultList();
+    public static TicketListWrap getCommentsLike(String str){
+        return new TicketListWrap(entityManager.createQuery("select t from Ticket t where t.comment like :str", Ticket.class).setParameter("str", "%"+str+"%").getResultList());
     }
-    public static List<Ticket> getCommentsLower(String str){
-        return entityManager.createQuery("select t from Ticket t where t.comment < :str", Ticket.class).setParameter("str", str).getResultList();
+    public static TicketListWrap getCommentsLower(String str){
+        return new TicketListWrap(entityManager.createQuery("select t from Ticket t where t.comment < :str", Ticket.class).setParameter("str", str).getResultList());
     }
 
 }

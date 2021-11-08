@@ -1,6 +1,6 @@
-package com.vgorash.web.beans;
+package com.vgorash.beans.beans;
 
-import com.vgorash.web.util.RequestStructure;
+import com.vgorash.beans.util.RequestStructure;
 
 import javax.ejb.Local;
 
@@ -12,4 +12,7 @@ public interface TicketService {
     void addTicket(RequestStructure requestStructure);
     void deleteTicket(RequestStructure requestStructure);
     void modifyTicket(RequestStructure requestStructure);
+    void getTicketListWithCommentsLike(RequestStructure requestStructure);
+    void getTicketListWithCommentsLower(RequestStructure requestStructure);
+    void getAveragePrice(RequestStructure requestStructure);
 }

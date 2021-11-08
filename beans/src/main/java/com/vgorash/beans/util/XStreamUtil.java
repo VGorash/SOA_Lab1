@@ -1,8 +1,8 @@
-package com.vgorash.web.util;
+package com.vgorash.beans.util;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.ConversionException;
-import com.vgorash.web.model.*;
+import com.vgorash.beans.model.*;
 
 import java.sql.Timestamp;
 import java.util.Date;

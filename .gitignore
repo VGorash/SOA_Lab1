@@ -1,4 +1,5 @@
 /target/
 /web/target
+/beans/target
 /.idea/
 *.iml

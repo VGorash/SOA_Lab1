@@ -1,6 +1,6 @@
-package com.vgorash.web.util;
+package com.vgorash.beans.util;
 
-import com.vgorash.web.model.*;
+import com.vgorash.beans.model.*;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

@@ -1,12 +1,11 @@
-package com.vgorash.web.service;
+package com.vgorash.beans.beans;
 
 import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
-import com.vgorash.web.beans.TicketService;
-import com.vgorash.web.model.*;
-import com.vgorash.web.util.*;
+import com.vgorash.beans.model.*;
+import com.vgorash.beans.util.*;
 
 import javax.ejb.Stateless;
 
@@ -131,6 +130,24 @@ public class TicketServiceBean implements TicketService {
         oldTicket.copy(newTicket);
         JPAUtil.saveTicket(oldTicket);
         requestStructure.setMessage(XStreamUtil.toXML(oldTicket));
+        requestStructure.setResponseCode(200);
+    }
+
+    @Override
+    public void getTicketListWithCommentsLike(RequestStructure requestStructure){
+        requestStructure.setMessage(XStreamUtil.toXML(JPAUtil.getCommentsLike(requestStructure.getRequestBody())));
+        requestStructure.setResponseCode(200);
+    }
+
+    @Override
+    public void getTicketListWithCommentsLower(RequestStructure requestStructure) {
+        requestStructure.setMessage(XStreamUtil.toXML(JPAUtil.getCommentsLower(requestStructure.getRequestBody())));
+        requestStructure.setResponseCode(200);
+    }
+
+    @Override
+    public void getAveragePrice(RequestStructure requestStructure) {
+        requestStructure.setMessage("<averagePrice>"+JPAUtil.getAveragePrice()+"</averagePrice>");
         requestStructure.setResponseCode(200);
     }
 }

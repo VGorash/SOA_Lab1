@@ -1,7 +1,7 @@
 package com.vgorash.web.controller;
 
-import com.vgorash.web.beans.TicketService;
-import com.vgorash.web.util.*;
+import com.vgorash.beans.beans.TicketService;
+import com.vgorash.beans.util.RequestStructure;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -86,9 +86,7 @@ public class MainController {
     @Produces(MediaType.APPLICATION_XML)
     public Response getAveragePrice(){
         RequestStructure requestStructure = new RequestStructure();
-        Double avg = JPAUtil.getAveragePrice();
-        requestStructure.setMessage(Objects.isNull(avg) ? null : avg.toString());
-        requestStructure.setResponseCode(200);
+        ticketService.getAveragePrice(requestStructure);
         return processResponse(requestStructure);
     }
 
@@ -102,8 +100,8 @@ public class MainController {
             requestStructure.setMessage("Missed required param 'string'");
         }
         else {
-            requestStructure.setMessage(XStreamUtil.toXML(new TicketListWrap(JPAUtil.getCommentsLike(str), 0)));
-            requestStructure.setResponseCode(200);
+            requestStructure.setRequestBody(str);
+            ticketService.getTicketListWithCommentsLike(requestStructure);
         }
         return processResponse(requestStructure);
     }
@@ -118,8 +116,8 @@ public class MainController {
             requestStructure.setMessage("Missed required param 'string'");
         }
         else {
-            requestStructure.setMessage(XStreamUtil.toXML(new TicketListWrap(JPAUtil.getCommentsLower(str), 0)));
-            requestStructure.setResponseCode(200);
+            requestStructure.setRequestBody(str);
+            ticketService.getTicketListWithCommentsLower(requestStructure);
         }
         return processResponse(requestStructure);
     }

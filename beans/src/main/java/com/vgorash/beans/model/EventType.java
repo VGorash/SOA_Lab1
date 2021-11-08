@@ -1,4 +1,4 @@
-package com.vgorash.web.model;
+package com.vgorash.beans.model;
 
 public enum EventType {
     CONCERT,
