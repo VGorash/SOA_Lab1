@@ -1,22 +1,25 @@
-package com.vgorash.beans.util;
+package com.vgorash.beans.beans;
 
 import com.vgorash.beans.model.*;
 
+import javax.ejb.Stateless;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.Objects;
 import java.util.Set;
 
-public class ValidationUtil {
+@Stateless
+public class ValidationUtilBean implements ValidationUtil{
 
-    private static Validator validator = setupValidator();
+    private final Validator validator;
 
-    private static Validator setupValidator(){
-        return Validation.buildDefaultValidatorFactory().getValidator();
+    public ValidationUtilBean(){
+        this.validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
-    public static String validate(Ticket ticket){
+    @Override
+    public String validate(Ticket ticket){
         StringBuilder result = new StringBuilder();
         Set<ConstraintViolation<Ticket>> ticketViolations = validator.validate(ticket);
         for(ConstraintViolation<Ticket> cv : ticketViolations){

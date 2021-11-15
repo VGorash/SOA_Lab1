@@ -1,6 +1,5 @@
 package com.vgorash.beans.model;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,35 +8,45 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name="soa_ticket")
-@XStreamAlias("ticket")
+@XmlRootElement(name = "ticket")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Ticket {
     @Id
     @GeneratedValue
+    @XmlElement
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
 
     @NotEmpty
+    @XmlElement
     private String name; //Поле не может быть null, Строка не может быть пустой
 
     @NotNull
     @Embedded
+    @XmlElement
     private Coordinates coordinates; //Поле не может быть null
 
     @NotNull
+    @XmlElement
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
     @Min(0)
+    @XmlElement
     private Integer price; //Поле может быть null, Значение поля должно быть больше 0
 
     @Size(max = 333)
+    @XmlElement
     private String comment; //Длина строки не должна быть больше 333, Поле может быть null
 
+    @XmlElement
     private TicketType type; //Поле может быть null
 
+    @XmlElement
     @ManyToOne
     private Event event; //Поле может быть null
 

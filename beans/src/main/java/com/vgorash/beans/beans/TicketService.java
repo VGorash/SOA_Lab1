@@ -1,18 +1,20 @@
 package com.vgorash.beans.beans;
 
-import com.vgorash.beans.util.RequestStructure;
+import com.vgorash.beans.model.Ticket;
+import com.vgorash.beans.model.TicketListWrap;
 
 import javax.ejb.Local;
+import java.util.Map;
 
 @Local
 public interface TicketService {
 
-    void getTicketList(RequestStructure requestStructure);
-    void getTicket(RequestStructure requestStructure);
-    void addTicket(RequestStructure requestStructure);
-    void deleteTicket(RequestStructure requestStructure);
-    void modifyTicket(RequestStructure requestStructure);
-    void getTicketListWithCommentsLike(RequestStructure requestStructure);
-    void getTicketListWithCommentsLower(RequestStructure requestStructure);
-    void getAveragePrice(RequestStructure requestStructure);
+    TicketListWrap getTicketList(Map<String, String[]> params);
+    Ticket getTicket(Long id);
+    Ticket addTicket(Ticket ticket);
+    void deleteTicket(Long id);
+    Ticket modifyTicket(Long id, Ticket ticket);
+    TicketListWrap getTicketListWithCommentsLike(String str);
+    TicketListWrap getTicketListWithCommentsLower(String str);
+    Double getAveragePrice();
 }

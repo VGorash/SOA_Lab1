@@ -1,22 +1,28 @@
 package com.vgorash.beans.model;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Getter
 @Setter
 @Embeddable
-@XStreamAlias("coordinates")
+@XmlRootElement(name = "coordinates")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinates {
     @NotNull
     @Max(916)
+    @XmlElement
     private Float x; //Максимальное значение поля: 916, Поле не может быть null
 
+    @XmlElement
     private int y;
 
     public static Coordinates fromString(String s){

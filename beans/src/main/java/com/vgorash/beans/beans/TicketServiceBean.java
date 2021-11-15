@@ -2,152 +2,115 @@ package com.vgorash.beans.beans;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import com.vgorash.beans.model.*;
 import com.vgorash.beans.util.*;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class TicketServiceBean implements TicketService {
 
-    private Ticket getTicketFromDB(RequestStructure requestStructure){
-        if(Objects.isNull(requestStructure.getId())){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage("id is incorrect");
-            return null;
+    @EJB
+    private ValidationUtil validationUtil;
+
+    @EJB
+    private JPAUtil jpaUtil;
+
+    @Override
+    public TicketListWrap getTicketList(Map<String, String[]> params){
+        try {
+            return jpaUtil.getTickets(params);
         }
-        Ticket ticket = JPAUtil.getTicket(requestStructure.getId());
-        if(Objects.isNull(ticket)){
-            requestStructure.setResponseCode(404);
-            requestStructure.setMessage("object not found") ;
-            return null;
+        catch (QueryParamsException e){
+            throw new TicketServiceException(e.getMessage(), 400);
+        }
+    }
+
+    @Override
+    public Ticket getTicket(Long id){
+        if(Objects.isNull(id)){
+            throw new TicketServiceException("id is incorrect", 400);
+        }
+        Ticket ticket = jpaUtil.getTicket(id);
+        if(ticket == null){
+            throw new TicketServiceException("ticket with id " + id + " is not found", 404);
         }
         return ticket;
     }
 
-    private Ticket getTicketFromRequest(RequestStructure requestStructure){
-        if(Objects.isNull(requestStructure.getRequestBody()) || requestStructure.getRequestBody().length() == 0){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage("empty body");
-            return null;
-        }
-        Ticket ticket = XStreamUtil.fromXML(requestStructure);
-        if(Objects.isNull(ticket)){
-            requestStructure.setResponseCode(400);
-            return null;
-        }
-        return ticket;
-    }
-
     @Override
-    public void getTicketList(RequestStructure requestStructure){
-        TicketListWrap tickets = JPAUtil.getTickets(requestStructure);
-        if(Objects.isNull(tickets)){
-            return;
-        }
-        requestStructure.setMessage(XStreamUtil.toXML(tickets));
-        requestStructure.setResponseCode(200);
-    }
-
-    @Override
-    public void getTicket(RequestStructure requestStructure){
-        Ticket ticket = getTicketFromDB(requestStructure);
-        if(Objects.isNull(ticket)){
-            return;
-        }
-        requestStructure.setMessage(XStreamUtil.toXML(ticket));
-        requestStructure.setResponseCode(200);
-    }
-
-    @Override
-    public void addTicket(RequestStructure requestStructure){
-        Ticket ticket = getTicketFromRequest(requestStructure);
-        if(Objects.isNull(ticket)){
-            return;
+    public Ticket addTicket(Ticket ticket){
+        if(ticket == null){
+            throw new TicketServiceException("empty request body", 400);
         }
         ticket.setCreationDate(Date.from(Instant.now()));
         ticket.setId(null);
-        String validationErrors = ValidationUtil.validate(ticket);
+        String validationErrors = validationUtil.validate(ticket);
         if(validationErrors.length() != 0){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage(validationErrors);
-            return;
+            throw new TicketServiceException(validationErrors, 400);
         }
         if(!Objects.isNull(ticket.getEvent())){
-            JPAUtil.saveEvent(ticket.getEvent());
+            Event newEvent = ticket.getEvent();
+            if(Objects.isNull(newEvent.getId())){
+                jpaUtil.saveEvent(newEvent);
+            }
         }
-        JPAUtil.saveTicket(ticket);
-        requestStructure.setMessage(XStreamUtil.toXML(ticket));
-        requestStructure.setResponseCode(200);
+        jpaUtil.saveTicket(ticket);
+        return ticket;
     }
 
     @Override
-    public void deleteTicket(RequestStructure requestStructure){
-        Ticket ticket = getTicketFromDB(requestStructure);
-        if(Objects.isNull(ticket)){
-            return;
-        }
-        JPAUtil.deleteTicket(ticket);
-        requestStructure.setMessage("");
-        requestStructure.setResponseCode(200);
+    public void deleteTicket(Long id){
+        Ticket ticket = getTicket(id);
+        jpaUtil.deleteTicket(ticket);
     }
 
     @Override
-    public void modifyTicket(RequestStructure requestStructure){
-        Ticket oldTicket = getTicketFromDB(requestStructure);
-        if(Objects.isNull(oldTicket)){
-            return;
-        }
-        Ticket newTicket = getTicketFromRequest(requestStructure);
-        if(Objects.isNull(newTicket)){
-            return;
+    public Ticket modifyTicket(Long id, Ticket newTicket){
+        Ticket oldTicket = getTicket(id);
+        if(newTicket == null){
+            throw new TicketServiceException("empty request body", 400);
         }
         newTicket.setCreationDate(Date.from(Instant.now()));
-        String validationErrors = ValidationUtil.validate(newTicket);
+        String validationErrors = validationUtil.validate(newTicket);
         if(validationErrors.length() != 0){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage(validationErrors);
-            return;
+            throw new TicketServiceException(validationErrors, 400);
         }
         if(!Objects.isNull(newTicket.getEvent())){
             Event newEvent = newTicket.getEvent();
             if(Objects.isNull(newEvent.getId())){
-                JPAUtil.saveEvent(newEvent);
+                jpaUtil.saveEvent(newEvent);
             }
             else{
-                Event oldEvent = JPAUtil.getEvent(newEvent.getId());
+                Event oldEvent = jpaUtil.getEvent(newEvent.getId());
                 if(Objects.isNull(oldEvent)){
-                    requestStructure.setResponseCode(404);
-                    requestStructure.setMessage("event not found");
-                    return;
+                    throw new TicketServiceException("ticket with id " + newEvent.getId() + " is not found", 404);
                 }
                 oldEvent.copy(newEvent);
-                JPAUtil.saveEvent(oldEvent);
+                jpaUtil.saveEvent(oldEvent);
             }
         }
         oldTicket.copy(newTicket);
-        JPAUtil.saveTicket(oldTicket);
-        requestStructure.setMessage(XStreamUtil.toXML(oldTicket));
-        requestStructure.setResponseCode(200);
+        jpaUtil.saveTicket(oldTicket);
+        return oldTicket;
     }
 
     @Override
-    public void getTicketListWithCommentsLike(RequestStructure requestStructure){
-        requestStructure.setMessage(XStreamUtil.toXML(JPAUtil.getCommentsLike(requestStructure.getRequestBody())));
-        requestStructure.setResponseCode(200);
+    public TicketListWrap getTicketListWithCommentsLike(String str){
+        return jpaUtil.getCommentsLike(str);
     }
 
     @Override
-    public void getTicketListWithCommentsLower(RequestStructure requestStructure) {
-        requestStructure.setMessage(XStreamUtil.toXML(JPAUtil.getCommentsLower(requestStructure.getRequestBody())));
-        requestStructure.setResponseCode(200);
+    public TicketListWrap getTicketListWithCommentsLower(String str) {
+        return jpaUtil.getCommentsLower(str);
     }
 
     @Override
-    public void getAveragePrice(RequestStructure requestStructure) {
-        requestStructure.setMessage("<averagePrice>"+JPAUtil.getAveragePrice()+"</averagePrice>");
-        requestStructure.setResponseCode(200);
+    public Double getAveragePrice() {
+        return jpaUtil.getAveragePrice();
     }
 }

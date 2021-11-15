@@ -1,15 +1,19 @@
-package com.vgorash.beans.util;
+package com.vgorash.beans.model;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.vgorash.beans.model.Ticket;
 import lombok.Data;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Data
-@XStreamAlias("ticketList")
+@XmlRootElement(name = "ticketList")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TicketListWrap {
+
+    public TicketListWrap(){}
 
     public TicketListWrap(List<Ticket> tickets, int totalTickets){
         this.tickets = tickets;
@@ -21,9 +25,10 @@ public class TicketListWrap {
         this.totalTickets = tickets.size();
     }
 
-    @XStreamImplicit
+    @XmlElement(name = "ticket")
     private List<Ticket> tickets;
 
+    @XmlElement
     private int totalTickets;
 
 }

@@ -1,13 +1,16 @@
 package com.vgorash.web.controller;
 
 import com.vgorash.beans.beans.TicketService;
-import com.vgorash.beans.util.RequestStructure;
+import com.vgorash.beans.model.Ticket;
+import com.vgorash.beans.model.TicketListWrap;
+import com.vgorash.beans.util.TicketServiceException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Path("/tickets")
@@ -16,17 +19,11 @@ public class MainController {
     @EJB
     private TicketService ticketService;
 
-    private Response processResponse(RequestStructure requestStructure){
-        return Response.status(requestStructure.getResponseCode())
-                .entity(requestStructure.getMessage()).build();
-    }
-
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getTicketList(@Context UriInfo uriParams){
-        RequestStructure requestStructure = new RequestStructure();
-        requestStructure.setParams(new HashMap<>());
+    public TicketListWrap getTicketList(@Context UriInfo uriParams){
+        Map<String, String[]> params = new HashMap<>();
         MultivaluedMap<String, String> mpAllQueParams = uriParams.getQueryParameters();
         for(String s : mpAllQueParams.keySet()){
             List<String> values = mpAllQueParams.get(s);
@@ -34,91 +31,89 @@ public class MainController {
             for(int i=0; i<values.size(); i++){
                 newValues[i] = values.get(i);
             }
-            requestStructure.getParams().put(s, newValues);
+            params.put(s, newValues);
         }
-        ticketService.getTicketList(requestStructure);
-        return processResponse(requestStructure);
+        try {
+            return ticketService.getTicketList(params);
+        }
+        catch (TicketServiceException e){
+            throw e.toWebApplicationException();
+        }
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getTicket(@PathParam("id") Long id){
-        RequestStructure requestStructure = new RequestStructure();
-        requestStructure.setId(id);
-        ticketService.getTicket(requestStructure);
-        return processResponse(requestStructure);
+    public Ticket getTicket(@PathParam("id") Long id){
+        try {
+            return ticketService.getTicket(id);
+        }
+        catch (TicketServiceException e){
+            throw e.toWebApplicationException();
+        }
     }
 
     @PUT
     @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
-    public Response modifyTicket(@PathParam("id") Long id, String body){
-        RequestStructure requestStructure = new RequestStructure();
-        requestStructure.setId(id);
-        requestStructure.setRequestBody(body);
-        ticketService.modifyTicket(requestStructure);
-        return processResponse(requestStructure);
+    public Ticket modifyTicket(@PathParam("id") Long id, Ticket ticket){
+        try {
+            return ticketService.modifyTicket(id, ticket);
+        }
+        catch (TicketServiceException e){
+            throw e.toWebApplicationException();
+        }
     }
 
     @POST
     @Path("/")
+    @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
-    public Response addTicket( String body){
-        RequestStructure requestStructure = new RequestStructure();
-        requestStructure.setRequestBody(body);
-        ticketService.addTicket(requestStructure);
-        return processResponse(requestStructure);
+    public Ticket addTicket(Ticket ticket){
+        try {
+            return ticketService.addTicket(ticket);
+        }
+        catch (TicketServiceException e){
+            throw e.toWebApplicationException();
+        }
     }
 
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_XML)
-    public Response deleteTicket(@PathParam("id") Long id){
-        RequestStructure requestStructure = new RequestStructure();
-        requestStructure.setId(id);
-        ticketService.deleteTicket(requestStructure);
-        return processResponse(requestStructure);
+    public void deleteTicket(@PathParam("id") Long id){
+        try {
+            ticketService.deleteTicket(id);
+        }
+        catch (TicketServiceException e){
+            throw e.toWebApplicationException();
+        }
     }
 
     @GET
     @Path("/avgprice")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getAveragePrice(){
-        RequestStructure requestStructure = new RequestStructure();
-        ticketService.getAveragePrice(requestStructure);
-        return processResponse(requestStructure);
+    public String getAveragePrice(){
+        return "<averagePrice>" + ticketService.getAveragePrice() + "</averagePrice>";
     }
 
     @GET
     @Path("/withcommentslike")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getTicketsWithCommentsLike(@QueryParam(value = "string") String str){
-        RequestStructure requestStructure = new RequestStructure();
+    public TicketListWrap getTicketsWithCommentsLike(@QueryParam(value = "string") String str){
         if(Objects.isNull(str)){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage("Missed required param 'string'");
+            throw new BadRequestException("missed required parameter 'string");
         }
-        else {
-            requestStructure.setRequestBody(str);
-            ticketService.getTicketListWithCommentsLike(requestStructure);
-        }
-        return processResponse(requestStructure);
+        return ticketService.getTicketListWithCommentsLike(str);
     }
 
     @GET
     @Path("/withcommentslower")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getTicketsWithCommentsLower(@QueryParam(value = "string") String str){
-        RequestStructure requestStructure = new RequestStructure();
+    public TicketListWrap getTicketsWithCommentsLower(@QueryParam(value = "string") String str){
         if(Objects.isNull(str)){
-            requestStructure.setResponseCode(400);
-            requestStructure.setMessage("Missed required param 'string'");
+            throw new BadRequestException("missed required parameter 'string");
         }
-        else {
-            requestStructure.setRequestBody(str);
-            ticketService.getTicketListWithCommentsLower(requestStructure);
-        }
-        return processResponse(requestStructure);
+        return ticketService.getTicketListWithCommentsLower(str);
     }
 }
