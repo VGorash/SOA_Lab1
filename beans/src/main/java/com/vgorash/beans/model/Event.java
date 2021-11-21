@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "soa_event")
 @XmlRootElement(name = "event")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Event {
+public class Event implements Serializable{
 
     @Id
     @GeneratedValue

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import javax.xml.bind.annotation.*;
 @Table(name="soa_ticket")
 @XmlRootElement(name = "ticket")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Ticket {
+public class Ticket implements Serializable{
     @Id
     @GeneratedValue
     @XmlElement

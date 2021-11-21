@@ -5,6 +5,7 @@ import com.vgorash.beans.model.Ticket;
 import com.vgorash.beans.model.TicketListWrap;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.Map;
 
 @Local
