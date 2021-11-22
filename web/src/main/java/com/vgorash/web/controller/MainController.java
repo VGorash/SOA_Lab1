@@ -8,10 +8,7 @@ import com.vgorash.beans.util.TicketServiceException;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Path("/tickets")
 public class MainController {

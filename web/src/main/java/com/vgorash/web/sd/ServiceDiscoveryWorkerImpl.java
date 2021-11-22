@@ -28,7 +28,7 @@ public class ServiceDiscoveryWorkerImpl implements ServiceDiscoveryWorker {
                     .name("main-ticket-service")
                     .port(25443)
                     .check(Registration.RegCheck.ttl(30L))
-                    .meta(Collections.singletonMap("app", "soa_lab1-snapshot"))
+                    .meta(Collections.singletonMap("api_address", "api/tickets/"))
                     .build();
 
             client.agentClient().register(service);

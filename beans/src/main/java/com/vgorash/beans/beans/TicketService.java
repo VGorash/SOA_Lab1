@@ -3,11 +3,10 @@ package com.vgorash.beans.beans;
 import com.vgorash.beans.model.Ticket;
 import com.vgorash.beans.model.TicketListWrap;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.Map;
 
-@Local
+@Remote
 public interface TicketService {
 
     TicketListWrap getTicketList(Map<String, String[]> params);

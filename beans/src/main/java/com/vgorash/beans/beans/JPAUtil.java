@@ -4,11 +4,10 @@ import com.vgorash.beans.model.Event;
 import com.vgorash.beans.model.Ticket;
 import com.vgorash.beans.model.TicketListWrap;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.Map;
 
-@Local
+@Remote
 public interface JPAUtil {
     void saveTicket(Ticket ticket);
     void saveEvent(Event event);
