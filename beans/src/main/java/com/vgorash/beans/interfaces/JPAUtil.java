@@ -1,13 +1,14 @@
-package com.vgorash.beans.beans;
+package com.vgorash.beans.interfaces;
 
 import com.vgorash.beans.model.Event;
 import com.vgorash.beans.model.Ticket;
 import com.vgorash.beans.model.TicketListWrap;
 
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.Map;
 
-@Remote
+@Local
 public interface JPAUtil {
     void saveTicket(Ticket ticket);
     void saveEvent(Event event);

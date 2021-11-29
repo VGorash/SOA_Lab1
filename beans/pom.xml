@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>beans</artifactId>
-    <packaging>ejb</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -33,6 +33,12 @@
             <artifactId>postgresql</artifactId>
             <version>42.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.1.Final</version>
+        </dependency>
+
     </dependencies>
 
 </project>

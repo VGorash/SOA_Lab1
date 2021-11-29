@@ -1,5 +1,6 @@
 package com.vgorash.beans.beans;
 
+import com.vgorash.beans.interfaces.JPAUtil;
 import com.vgorash.beans.model.Coordinates;
 import com.vgorash.beans.model.Event;
 import com.vgorash.beans.model.Ticket;
@@ -8,10 +9,7 @@ import com.vgorash.beans.util.QueryParamsException;
 import com.vgorash.beans.model.TicketListWrap;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

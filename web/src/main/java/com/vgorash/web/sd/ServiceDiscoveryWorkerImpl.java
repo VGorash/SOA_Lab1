@@ -5,30 +5,51 @@ import com.orbitz.consul.Consul;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
 import lombok.SneakyThrows;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import java.util.Collections;
 
 @Singleton
 @Startup
 public class ServiceDiscoveryWorkerImpl implements ServiceDiscoveryWorker {
+
     private Consul client = null;
-    private static final String serviceId = "MainTicketService";
+
+    @Inject
+    @ConfigProperty(name="service.port")
+    private String port;
+
+    @Inject
+    @ConfigProperty(name="service.url")
+    private String url;
+
+    @Inject
+    @ConfigProperty(name="service.name")
+    private String name;
+
+    @Inject
+    @ConfigProperty(name="service.id")
+    private String serviceId;
+
 
     @PostConstruct
     private void register(){
+
         try {
             client = Consul.builder().build();
             Registration service = ImmutableRegistration.builder()
                     .id(serviceId)
-                    .name("main-ticket-service")
-                    .port(25443)
+                    .name(name)
+                    .port(Integer.parseInt(port))
                     .check(Registration.RegCheck.ttl(30L))
-                    .meta(Collections.singletonMap("api_address", "api/tickets/"))
+                    .meta(Collections.singletonMap("api_address", url))
                     .build();
 
             client.agentClient().register(service);

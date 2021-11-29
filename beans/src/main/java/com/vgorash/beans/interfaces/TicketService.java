@@ -1,4 +1,4 @@
-package com.vgorash.beans.beans;
+package com.vgorash.beans.interfaces;
 
 import com.vgorash.beans.model.Ticket;
 import com.vgorash.beans.model.TicketListWrap;

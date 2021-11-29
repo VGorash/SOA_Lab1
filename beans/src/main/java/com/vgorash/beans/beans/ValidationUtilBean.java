@@ -1,5 +1,6 @@
 package com.vgorash.beans.beans;
 
+import com.vgorash.beans.interfaces.ValidationUtil;
 import com.vgorash.beans.model.*;
 
 import javax.ejb.Stateless;
@@ -10,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Stateless
-public class ValidationUtilBean implements ValidationUtil{
+public class ValidationUtilBean implements ValidationUtil {
 
     private final Validator validator;
 
