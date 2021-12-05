@@ -1,12 +1,8 @@
-package com.vgorash.beans.beans;
+package com.vgorash.beans;
 
-import com.vgorash.beans.interfaces.JPAUtil;
-import com.vgorash.beans.model.Coordinates;
-import com.vgorash.beans.model.Event;
-import com.vgorash.beans.model.Ticket;
-import com.vgorash.beans.model.TicketType;
-import com.vgorash.beans.util.QueryParamsException;
-import com.vgorash.beans.model.TicketListWrap;
+import com.vgorash.common.interfaces.JPAUtil;
+import com.vgorash.common.model.*;
+import com.vgorash.common.util.QueryParamsException;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;

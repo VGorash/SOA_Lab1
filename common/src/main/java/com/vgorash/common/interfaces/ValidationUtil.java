@@ -1,6 +1,6 @@
-package com.vgorash.beans.interfaces;
+package com.vgorash.common.interfaces;
 
-import com.vgorash.beans.model.Ticket;
+import com.vgorash.common.model.Ticket;
 
 import javax.ejb.Remote;
 

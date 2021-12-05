@@ -1,11 +1,10 @@
-package com.vgorash.beans.interfaces;
+package com.vgorash.common.interfaces;
 
-import com.vgorash.beans.model.Event;
-import com.vgorash.beans.model.Ticket;
-import com.vgorash.beans.model.TicketListWrap;
+import com.vgorash.common.model.Event;
+import com.vgorash.common.model.Ticket;
+import com.vgorash.common.model.TicketListWrap;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import java.util.Map;
 
 @Local

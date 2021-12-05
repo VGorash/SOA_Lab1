@@ -1,7 +1,7 @@
-package com.vgorash.beans.beans;
+package com.vgorash.beans;
 
-import com.vgorash.beans.interfaces.ValidationUtil;
-import com.vgorash.beans.model.*;
+import com.vgorash.common.interfaces.ValidationUtil;
+import com.vgorash.common.model.*;
 
 import javax.ejb.Stateless;
 import javax.validation.ConstraintViolation;

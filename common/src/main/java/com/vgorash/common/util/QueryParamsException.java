@@ -1,4 +1,4 @@
-package com.vgorash.beans.util;
+package com.vgorash.common.util;
 
 import lombok.Getter;
 

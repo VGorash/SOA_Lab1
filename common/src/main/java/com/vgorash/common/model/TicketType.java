@@ -1,4 +1,4 @@
-package com.vgorash.beans.model;
+package com.vgorash.common.model;
 
 public enum TicketType {
     VIP,

@@ -1,9 +1,9 @@
 package com.vgorash.web.controller;
 
-import com.vgorash.beans.interfaces.TicketService;
-import com.vgorash.beans.model.Ticket;
-import com.vgorash.beans.model.TicketListWrap;
-import com.vgorash.beans.util.TicketServiceException;
+import com.vgorash.common.interfaces.TicketService;
+import com.vgorash.common.model.Ticket;
+import com.vgorash.common.model.TicketListWrap;
+import com.vgorash.common.util.TicketServiceException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -13,7 +13,7 @@ import java.util.*;
 @Path("/tickets")
 public class MainController {
 
-    @EJB(name = "java:global/beans-1.0-SNAPSHOT/TicketServiceBean!com.vgorash.beans.interfaces.TicketService")
+    @EJB(name = "java:global/beans-1.0-SNAPSHOT/TicketServiceBean!com.vgorash.common.interfaces.TicketService")
     private TicketService ticketService;
 
     @GET

@@ -1,15 +1,13 @@
-package com.vgorash.beans.beans;
+package com.vgorash.beans;
 
 import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-import com.vgorash.beans.interfaces.JPAUtil;
-import com.vgorash.beans.interfaces.TicketService;
-import com.vgorash.beans.interfaces.ValidationUtil;
-import com.vgorash.beans.model.*;
-import com.vgorash.beans.util.*;
+import com.vgorash.common.interfaces.*;
+import com.vgorash.common.model.*;
+import com.vgorash.common.util.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

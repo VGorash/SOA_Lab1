@@ -3,8 +3,8 @@
 
     <persistence-unit name="hibernate">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.vgorash.beans.model.Ticket</class>
-        <class>com.vgorash.beans.model.Event</class>
+        <class>com.vgorash.common.model.Ticket</class>
+        <class>com.vgorash.common.model.Event</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/studs"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
