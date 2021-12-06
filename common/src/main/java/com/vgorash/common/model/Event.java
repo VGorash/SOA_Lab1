@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class Event implements Serializable{
     private String name; //Поле не может быть null, Строка не может быть пустой
 
     @XmlElement
-    private java.time.LocalDateTime date; //Поле может быть null
+    private Date date; //Поле может быть null
 
     @XmlElement
     private EventType eventType; //Поле может быть null

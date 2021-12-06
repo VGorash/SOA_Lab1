@@ -13,7 +13,7 @@ import java.util.*;
 @Path("/tickets")
 public class MainController {
 
-    @EJB(name = "java:global/beans-1.0-SNAPSHOT/TicketServiceBean!com.vgorash.common.interfaces.TicketService")
+    @EJB
     private TicketService ticketService;
 
     @GET
